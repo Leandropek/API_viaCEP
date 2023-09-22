@@ -6,27 +6,33 @@ body {
     background-color: white;
 }
 
-
-
 main {
     align-content: center;
-    font-size: 1.2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh;    
 }
 
 .container {
     border: 5px solid black;
     border-radius: 10px;
     padding: 0.5rem;
+    box-shadow: 1px 1px 10px black;
+    font-size: 1rem;
+    margin-top: 0.5rem;
 }
 
 .cep {
     border-bottom: 5px solid black;
     padding-bottom: 15px;   
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .endereco {
@@ -58,4 +64,21 @@ button {
         color: black;
         border: 1px solid black;
     }
+}
+
+@keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.5rem;
 }
