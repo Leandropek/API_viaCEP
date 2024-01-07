@@ -1,75 +1,88 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API viaCep</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="favicon/localizacao.ico" type="image/x-icon">
-</head>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="shortcut icon"
+      href="favicon/localizacao.ico"
+      type="image/x-icon"
+    />
+  </head>
 
-<body>
+  <body>
     <main>
-        <div class="container">
-            <div class="cep">
-                <h1>Endereço via CEP</h1>
-    
-                <label for="cep">Digite seu CEP:</label>
-                <input type="text" id="cep" maxlength="8" placeholder="  Apenas 8 números..." required>
-            </div>
-    
-            <div class="endereco">
-                <label for="rua">Rua:</label>
-                <input type="texto" id="rua" maxlength="0">
-    
-                <label for="bairro">Bairro:</label>
-                <input type="text" id="bairro" maxlength="0">
-    
-                <label for="cidade">Cidade:</label>
-                <input type="text" id="cidade" maxlength="0">
-            </div>
-    
-            <div class="botao">
-                <button onclick="buscarEndereco()">Buscar</button>
-                <button onclick="limparEndereco()">Limpar</button>            
-            </div>
-        </div>              
+      <div class="container">
+        <div class="cep">
+          <h1>Endereço via CEP</h1>
+
+          <label for="cep">Digite seu CEP:</label>
+          <input
+            type="text"
+            id="cep"
+            maxlength="8"
+            placeholder="  Apenas 8 números..."
+            required
+          />
+        </div>
+
+        <div class="endereco">
+          <label for="rua">Rua:</label>
+          <input type="texto" id="rua" maxlength="0" />
+
+          <label for="bairro">Bairro:</label>
+          <input type="text" id="bairro" maxlength="0" />
+
+          <label for="cidade">Cidade:</label>
+          <input type="text" id="cidade" maxlength="0" />
+        </div>
+
+        <div class="botao">
+          <button onclick="buscarEndereco()">Buscar</button>
+          <button onclick="limparEndereco()">Limpar</button>
+        </div>
+      </div>
     </main>
     <footer>
-        <div class="footer">
-            <h1>Desenvolvido por &copy; Leandro Reis</h1>
-        </div>
+      <div class="footer">
+        <h1>Desenvolvido por &copy; Leandro Reis</h1>
+      </div>
     </footer>
 
     <script>
-        function buscarEndereco(){
-            let cep = document.getElementById('cep').value;
-            if (cep.length !== 8 || cep === '' || isNaN(cep)) {
-                alert('CEP inválido. Digite seu CEP corretamente com 8 números.');
-                return limparEndereco();
+      function buscarEndereco() {
+        let cep = document.getElementById("cep").value;
+        if (cep.length !== 8 || cep === "" || isNaN(cep)) {
+          alert("CEP inválido. Digite seu CEP corretamente com 8 números.");
+          return limparEndereco();
+        }
+
+        let url = `https://viacep.com.br/ws/${cep}/json/`;
+        fetch(url)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.erro) {
+              alert("CEP não encontrado.");
+              return limparEndereco();
             }
 
-            let url = `https://viacep.com.br/ws/${cep}/json/`;
-            fetch(url).then(function(response) {
-                return response.json();
-            }).then(function(data) {
-                if (data.erro) {
-                    alert('CEP não encontrado.');
-                    return limparEndereco();
-                }
-                
-                document.getElementById('rua').value = data.logradouro;
-                document.getElementById('bairro').value = data.bairro;
-                document.getElementById('cidade').value = (data.localidade) + "-" + (data.uf);
-            });            
-        }
+            document.getElementById("rua").value = data.logradouro;
+            document.getElementById("bairro").value = data.bairro;
+            document.getElementById("cidade").value =
+              data.localidade + "-" + data.uf;
+          });
+      }
 
-        function limparEndereco() {
-            document.getElementById('cep').value = '';
-            document.getElementById('rua').value = '';
-            document.getElementById('bairro').value = '';
-            document.getElementById('cidade').value = '';
-        }
+      function limparEndereco() {
+        document.getElementById("cep").value = "";
+        document.getElementById("rua").value = "";
+        document.getElementById("bairro").value = "";
+        document.getElementById("cidade").value = "";
+      }
     </script>
-</body>
+  </body>
 </html>
